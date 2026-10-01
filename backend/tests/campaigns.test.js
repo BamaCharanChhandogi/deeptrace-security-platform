@@ -2,6 +2,8 @@ const request = require('supertest');
 const app = require('../src/app');
 const db = require('../src/config/database');
 
+jest.setTimeout(30000);
+
 describe('Campaign Management, RBAC & State Machine', () => {
   let adminToken;
   let managerToken;

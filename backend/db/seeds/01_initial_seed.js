@@ -34,12 +34,12 @@ exports.seed = async function(knex) {
     }
   ]);
 
-  // 2. Users
-  const userAAdmin = 'u1000001-0000-0000-0000-000000000001';
-  const userAManager = 'u1000002-0000-0000-0000-000000000002';
-  const userAAnalyst = 'u1000003-0000-0000-0000-000000000003';
-  const userBAdmin = 'u2000001-0000-0000-0000-000000000001';
-  const userBManager = 'u2000002-0000-0000-0000-000000000002';
+  // 2. Users (valid hexadecimal UUIDs)
+  const userAAdmin = 'a1000001-0000-0000-0000-000000000001';
+  const userAManager = 'a1000002-0000-0000-0000-000000000002';
+  const userAAnalyst = 'a1000003-0000-0000-0000-000000000003';
+  const userBAdmin = 'b2000001-0000-0000-0000-000000000001';
+  const userBManager = 'b2000002-0000-0000-0000-000000000002';
 
   await knex('users').insert([
     {

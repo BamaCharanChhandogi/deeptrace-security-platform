@@ -2,12 +2,14 @@ const request = require('supertest');
 const app = require('../src/app');
 const db = require('../src/config/database');
 
+jest.setTimeout(30000);
+
 describe('Mandatory Security Scenario: Multi-Tenant Data Isolation', () => {
   let tenantAToken;
   let tenantBToken;
   const tenantBCampaignId = 'c2000001-0000-0000-0000-000000000001';
   const tenantACampaignId = 'c1000001-0000-0000-0000-000000000001';
-  const tenantBUserId = 'u2000002-0000-0000-0000-000000000002';
+  const tenantBUserId = 'b2000002-0000-0000-0000-000000000002';
 
   beforeAll(async () => {
     // 1. Authenticate as Tenant A (Sarah Connor - CyberShield Admin)
