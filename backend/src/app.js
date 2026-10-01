@@ -27,14 +27,26 @@ app.use(express.urlencoded({ extended: true, limit: '1mb' }));
 app.use(cookieParser());
 app.use(requestIdMiddleware);
 
-// Health check endpoint (public, unauthenticated)
-app.get('/health', (req, res) => {
+const db = require('./config/database');
+
+// Health check endpoints (public, unauthenticated) - keeps Render & Neon DB awake
+const healthHandler = async (req, res) => {
+  let dbStatus = 'connected';
+  try {
+    await db.raw('SELECT 1');
+  } catch (err) {
+    dbStatus = 'disconnected';
+  }
+
   res.status(200).json({
     status: 'healthy',
+    database: dbStatus,
     timestamp: new Date().toISOString(),
     service: 'deeptrace-security-platform'
   });
-});
+};
+
+app.get(['/', '/health', '/api/health'], healthHandler);
 
 // API Routes
 app.use('/api/auth', authRoutes);
