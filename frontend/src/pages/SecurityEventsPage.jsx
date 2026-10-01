@@ -154,7 +154,7 @@ export default function SecurityEventsPage() {
             <div className="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center text-rose-600 shrink-0">
               <ShieldAlert className="w-5 h-5 stroke-[2]" />
             </div>
-            <span>Incident & Event Management</span>
+            <span>Security Events</span>
           </h1>
           <p className="dt-body mt-1">
             Real-time feed of telemetry, attack attempts, and anomaly detections.
@@ -167,7 +167,7 @@ export default function SecurityEventsPage() {
             className="btn-dt-action bg-rose-600 hover:bg-rose-700 self-start sm:self-auto cursor-pointer"
           >
             <Plus className="w-4 h-4" />
-            <span>Record Incident</span>
+            <span>Log Security Event</span>
           </button>
         )}
       </div>
@@ -298,7 +298,7 @@ export default function SecurityEventsPage() {
       <Modal
         isOpen={!!selectedEvent}
         onClose={() => setSelectedEvent(null)}
-        title="Incident Forensics & Status"
+        title="Security Event Details"
         maxWidth="max-w-xl"
       >
         {selectedEvent && (
@@ -384,11 +384,11 @@ export default function SecurityEventsPage() {
         )}
       </Modal>
 
-      {/* Record Incident Modal */}
+      {/* Log Security Event Modal */}
       <Modal
         isOpen={isCreateOpen}
         onClose={() => setIsCreateOpen(false)}
-        title="Record Security Incident"
+        title="Log Security Event"
       >
         <form onSubmit={handleCreateSubmit} className="space-y-4">
           <div>
@@ -477,7 +477,7 @@ export default function SecurityEventsPage() {
               disabled={isSubmitting}
               className="btn-dt-action bg-rose-600 hover:bg-rose-700"
             >
-              {isSubmitting ? 'Recording...' : 'Record Incident'}
+              {isSubmitting ? 'Logging...' : 'Log Security Event'}
             </button>
           </div>
         </form>
