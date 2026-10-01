@@ -4,69 +4,69 @@
 
 @layer base {
   body {
-    background-color: #0E1033;
-    color: #FCFCFC;
+    background-color: #F8FAFC;
+    color: #0F172A;
     font-family: 'Inter', sans-serif;
     font-size: 14px;
     line-height: 1.5;
   }
 }
 
-/* DeepTrace Scrollbars */
+/* Subtle, clean scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0E1033;
+  background: #F1F5F9;
 }
 ::-webkit-scrollbar-thumb {
-  background: #2C3078;
+  background: #CBD5E1;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #009CD9;
+  background: #94A3B8;
 }
 
 /* =========================================================================
    EXACT DEEPTRACE DESIGN SYSTEM (Extracted from deeptrace.in inspect tools)
    ========================================================================= */
 
-/* Hero / Main Page Title: Roboto, 500 weight, 39px size, 42px line-height, #FCFCFC */
+/* Hero / Page Main Heading: Roboto, 500 weight, DeepTrace Navy #18194B */
 .dt-hero-title {
   font-family: 'Roboto', sans-serif;
   font-weight: 500;
-  font-size: 39px;
-  line-height: 42px;
-  color: #FCFCFC;
+  font-size: 30px;
+  line-height: 38px;
+  color: #18194B;
   letter-spacing: -0.5px;
 }
 
-/* Section Sub-heading: Inter, 600 weight, 26px size, 35px line-height, #009CD9 */
+/* Section Sub-heading: Inter, 600 weight, DeepTrace Cyan #009CD9 */
 .dt-section-title {
   font-family: 'Inter', sans-serif;
   font-weight: 600;
-  font-size: 26px;
-  line-height: 35px;
+  font-size: 22px;
+  line-height: 30px;
   color: #009CD9;
 }
 
-/* Card Heading: Inter, 600 weight, 18px size, 24px line-height, #FCFCFC */
+/* Card Heading: Inter, 600 weight, DeepTrace Navy #18194B */
 .dt-card-title {
   font-family: 'Inter', sans-serif;
   font-weight: 600;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 24px;
-  color: #FCFCFC;
+  color: #18194B;
 }
 
-/* Standard Body / Descriptions: Inter, 400 weight, 14px size, #94A3B8 */
+/* Standard Body / Descriptions: Inter, 400 weight, Slate 500 */
 .dt-body {
   font-family: 'Inter', sans-serif;
   font-weight: 400;
   font-size: 14px;
   line-height: 22px;
-  color: #94A3B8;
+  color: #64748B;
 }
 
 /* Primary Pill Button (Exact like 'VIEW SERVICES >' on deeptrace.in) */
@@ -78,18 +78,18 @@
   font-size: 13px;
   line-height: 18px;
   border-radius: 9999px;
-  padding: 10px 24px;
+  padding: 10px 22px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
   transition: all 0.2s ease-in-out;
-  box-shadow: 0 4px 15px rgba(0, 156, 217, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 156, 217, 0.25);
 }
 .btn-dt-pill:hover {
   background-color: #0084B8;
-  box-shadow: 0 6px 20px rgba(0, 156, 217, 0.45);
+  box-shadow: 0 4px 14px rgba(0, 156, 217, 0.35);
   transform: translateY(-1px);
 }
 
@@ -99,70 +99,101 @@
   color: #FFFFFF;
   font-family: 'Inter', sans-serif;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 13px;
   border-radius: 6px;
   padding: 8px 18px;
-  border: 1px solid #2C3078;
+  border: 1px solid #18194B;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   transition: all 0.2s ease;
 }
 .btn-dt-quote:hover {
   background-color: #23266A;
-  border-color: #009CD9;
+  border-color: #23266A;
 }
 
-/* Rounded Action Button (For CRUD forms, modals, tables) */
+/* Primary Action Button (For CRUD forms, modals, tables) */
 .btn-dt-action {
   background-color: #009CD9;
   color: #FFFFFF;
   font-family: 'Roboto', sans-serif;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 13px;
   border-radius: 8px;
-  padding: 10px 20px;
+  padding: 8px 18px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 156, 217, 0.2);
 }
 .btn-dt-action:hover {
   background-color: #0084B8;
+  box-shadow: 0 2px 6px rgba(0, 156, 217, 0.3);
 }
 
-/* DeepTrace Surface Card (Navy container with 14px border radius) */
+/* Secondary Action Button */
+.btn-dt-secondary {
+  background-color: #FFFFFF;
+  color: #334155;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  border-radius: 8px;
+  border: 1px solid #E2E8F0;
+  padding: 8px 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.15s ease;
+}
+.btn-dt-secondary:hover {
+  background-color: #F8FAFC;
+  border-color: #CBD5E1;
+  color: #0F172A;
+}
+
+/* Crisp White Surface Card */
 .cyber-panel, .dt-card {
-  background-color: #18194B;
-  border: 1px solid #2C3078;
-  border-radius: 14px;
+  background-color: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
 /* DeepTrace Feature Icon Box (From 'Here what makes us Different' section) */
 .dt-icon-box {
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border-radius: 10px;
-  background-color: #009CD9;
-  color: #FFFFFF;
+  background-color: #E0F2FE;
+  color: #009CD9;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
 
-/* Form Inputs matching DeepTrace design */
+/* Form Inputs matching DeepTrace clean design */
 .dt-input {
-  background-color: #10133B;
-  border: 1px solid #2C3078;
+  background-color: #FFFFFF;
+  border: 1px solid #CBD5E1;
   border-radius: 8px;
-  color: #FCFCFC;
+  color: #0F172A;
   font-family: 'Inter', sans-serif;
   font-size: 14px;
-  padding: 10px 14px;
+  padding: 9px 13px;
   width: 100%;
-  transition: border-color 0.2s ease;
+  transition: all 0.15s ease;
+}
+.dt-input::placeholder {
+  color: #94A3B8;
 }
 .dt-input:focus {
   outline: none;
   border-color: #009CD9;
-  box-shadow: 0 0 0 1px #009CD9;
+  box-shadow: 0 0 0 3px rgba(0, 156, 217, 0.15);
 }

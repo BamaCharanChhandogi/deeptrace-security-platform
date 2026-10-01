@@ -9,29 +9,29 @@ export default function Pagination({ pagination, onPageChange }) {
   const endItem = Math.min(page * limit, total);
 
   return (
-    <div className="flex items-center justify-between px-4 py-3 bg-slate-900/60 border-t border-slate-800">
-      <div className="text-xs text-slate-400">
-        Showing <span className="font-semibold text-slate-200">{startItem}</span> to{' '}
-        <span className="font-semibold text-slate-200">{endItem}</span> of{' '}
-        <span className="font-semibold text-slate-200">{total}</span> results
+    <div className="flex items-center justify-between px-5 py-3.5 bg-white border-t border-slate-200">
+      <div className="text-xs text-slate-500">
+        Showing <span className="font-semibold text-slate-800">{startItem}</span> to{' '}
+        <span className="font-semibold text-slate-800">{endItem}</span> of{' '}
+        <span className="font-semibold text-slate-800">{total}</span> results
       </div>
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-1.5">
         <button
           onClick={() => onPageChange(page - 1)}
           disabled={page <= 1}
-          className="p-1.5 rounded-lg border border-slate-800 bg-slate-900 text-slate-300 hover:bg-slate-800 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed transition"
+          className="p-1.5 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 hover:text-slate-900 disabled:opacity-40 disabled:cursor-not-allowed transition cursor-pointer"
         >
           <ChevronLeft className="w-4 h-4" />
         </button>
 
-        <span className="px-3 py-1 text-xs font-mono text-slate-300 bg-slate-950/60 rounded border border-slate-800">
+        <span className="px-3 py-1 text-xs font-mono font-medium text-slate-700 bg-slate-50 rounded-lg border border-slate-200">
           {page} / {totalPages}
         </span>
 
         <button
           onClick={() => onPageChange(page + 1)}
           disabled={page >= totalPages}
-          className="p-1.5 rounded-lg border border-slate-800 bg-slate-900 text-slate-300 hover:bg-slate-800 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed transition"
+          className="p-1.5 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 hover:text-slate-900 disabled:opacity-40 disabled:cursor-not-allowed transition cursor-pointer"
         >
           <ChevronRight className="w-4 h-4" />
         </button>

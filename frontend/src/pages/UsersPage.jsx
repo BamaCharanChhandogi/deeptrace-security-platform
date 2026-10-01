@@ -87,11 +87,13 @@ export default function UsersPage() {
 
   return (
     <div className="space-y-6">
-      {/* Header with DeepTrace Hero Typography */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-[#2C3078]">
+      {/* Header with DeepTrace Typography */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-5 border-b border-slate-200">
         <div>
-          <h1 className="dt-hero-title text-2xl sm:text-[39px] sm:leading-[42px] flex items-center gap-3">
-            <Users className="w-8 h-8 text-[#009CD9]" />
+          <h1 className="dt-hero-title text-2xl sm:text-[32px] sm:leading-[38px] flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-sky-50 flex items-center justify-center text-[#009CD9] shrink-0">
+              <Users className="w-5 h-5 stroke-[2]" />
+            </div>
             <span>Personnel & Access Directory</span>
           </h1>
           <p className="dt-body mt-1">
@@ -113,7 +115,7 @@ export default function UsersPage() {
       {/* Filter / Search Bar */}
       <div className="flex flex-col md:flex-row items-center gap-3">
         <form onSubmit={handleSearchSubmit} className="relative flex-1 w-full">
-          <Search className="w-4 h-4 text-[#94A3B8] absolute left-3.5 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             value={search}
@@ -139,7 +141,7 @@ export default function UsersPage() {
       </div>
 
       {/* Users Table */}
-      <div className="dt-card overflow-hidden">
+      <div className="bg-white rounded-xl border border-slate-200/90 shadow-xs overflow-hidden">
         {isLoading ? (
           <div className="py-20 flex justify-center">
             <LoadingSpinner size="lg" />
@@ -153,27 +155,27 @@ export default function UsersPage() {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="bg-slate-900/80 border-b border-slate-800 text-slate-400 uppercase font-mono text-[10px] tracking-wider">
+              <thead className="bg-slate-50 border-b border-slate-200 text-slate-600 uppercase font-semibold text-[11px] tracking-wider">
                 <tr>
-                  <th className="px-5 py-3">Team Member</th>
-                  <th className="px-5 py-3">Assigned Role</th>
-                  <th className="px-5 py-3">Account Status</th>
-                  <th className="px-5 py-3">Joined Date</th>
+                  <th className="px-5 py-3.5">Team Member</th>
+                  <th className="px-5 py-3.5">Assigned Role</th>
+                  <th className="px-5 py-3.5">Account Status</th>
+                  <th className="px-5 py-3.5">Joined Date</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60">
+              <tbody className="divide-y divide-slate-100">
                 {users.map((u) => (
-                  <tr key={u.id} className="hover:bg-slate-900/40 transition">
+                  <tr key={u.id} className="hover:bg-slate-50/70 transition">
                     <td className="px-5 py-3.5">
-                      <div className="font-semibold text-slate-200 flex items-center gap-2">
+                      <div className="font-semibold text-slate-900 flex items-center gap-2">
                         <span>{u.name}</span>
                         {u.id === user?.id && (
-                          <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-sky-50 text-[#009CD9] border border-sky-200">
                             YOU
                           </span>
                         )}
                       </div>
-                      <div className="text-[11px] text-slate-400 font-mono mt-0.5">
+                      <div className="text-xs text-slate-500 mt-0.5">
                         {u.email}
                       </div>
                     </td>
@@ -182,18 +184,18 @@ export default function UsersPage() {
                     </td>
                     <td className="px-5 py-3.5">
                       {u.is_active ? (
-                        <span className="inline-flex items-center gap-1.5 text-emerald-400 font-mono text-[11px]">
-                          <CheckCircle className="w-3.5 h-3.5" />
+                        <span className="inline-flex items-center gap-1.5 text-emerald-700 font-medium text-xs">
+                          <CheckCircle className="w-3.5 h-3.5 text-emerald-500" />
                           Active
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1.5 text-rose-400 font-mono text-[11px]">
-                          <XCircle className="w-3.5 h-3.5" />
+                        <span className="inline-flex items-center gap-1.5 text-rose-700 font-medium text-xs">
+                          <XCircle className="w-3.5 h-3.5 text-rose-500" />
                           Disabled
                         </span>
                       )}
                     </td>
-                    <td className="px-5 py-3.5 text-slate-400 font-mono text-[11px]">
+                    <td className="px-5 py-3.5 text-slate-500 text-xs">
                       {formatDate(u.created_at)}
                     </td>
                   </tr>
@@ -214,7 +216,7 @@ export default function UsersPage() {
       >
         <form onSubmit={handleCreateUser} className="space-y-4">
           <div>
-            <label className="block text-xs font-medium text-slate-300 mb-1">
+            <label className="block text-xs font-semibold text-slate-700 mb-1.5">
               Full Name *
             </label>
             <input
@@ -223,12 +225,12 @@ export default function UsersPage() {
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               placeholder="e.g. Alex Morgan"
-              className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-slate-100 focus:outline-none focus:border-cyan-500"
+              className="dt-input text-sm"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-slate-300 mb-1">
+            <label className="block text-xs font-semibold text-slate-700 mb-1.5">
               Organization Email *
             </label>
             <input
@@ -237,13 +239,13 @@ export default function UsersPage() {
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               placeholder="alex.morgan@organization.io"
-              className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-slate-100 focus:outline-none focus:border-cyan-500"
+              className="dt-input text-sm"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5">
                 Password *
               </label>
               <input
@@ -253,18 +255,18 @@ export default function UsersPage() {
                 value={formData.password}
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 placeholder="Min 8 chars"
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-slate-100 focus:outline-none focus:border-cyan-500"
+                className="dt-input text-sm"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5">
                 Role *
               </label>
               <select
                 value={formData.role}
                 onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-slate-100 focus:outline-none focus:border-cyan-500"
+                className="dt-input text-sm"
               >
                 <option value="USER">USER (Analyst / Read-Only)</option>
                 <option value="MANAGER">MANAGER (Campaigns & Events)</option>
@@ -273,18 +275,18 @@ export default function UsersPage() {
             </div>
           </div>
 
-          <div className="flex justify-end gap-2 pt-3 border-t border-slate-800">
+          <div className="flex justify-end gap-2.5 pt-3 border-t border-slate-100">
             <button
               type="button"
               onClick={() => setIsCreateOpen(false)}
-              className="px-4 py-2 rounded-xl text-xs font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition"
+              className="btn-dt-secondary"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-4 py-2 rounded-xl text-xs font-semibold bg-cyan-600 hover:bg-cyan-500 text-white transition"
+              className="btn-dt-action"
             >
               {isSubmitting ? 'Provisioning...' : 'Provision User'}
             </button>

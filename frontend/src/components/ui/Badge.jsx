@@ -2,39 +2,39 @@ import React from 'react';
 
 const VARIANTS = {
   // Roles
-  ADMIN: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30',
-  MANAGER: 'bg-amber-500/10 text-amber-400 border-amber-500/30',
-  USER: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30',
+  ADMIN: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+  MANAGER: 'bg-amber-50 text-amber-700 border-amber-200',
+  USER: 'bg-sky-50 text-sky-700 border-sky-200',
 
   // Campaign Statuses
-  DRAFT: 'bg-slate-500/10 text-slate-400 border-slate-500/30',
-  ACTIVE: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30',
-  COMPLETED: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30',
-  CANCELLED: 'bg-rose-500/10 text-rose-400 border-rose-500/30',
+  DRAFT: 'bg-slate-100 text-slate-600 border-slate-200',
+  ACTIVE: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+  COMPLETED: 'bg-sky-50 text-[#0084B8] border-sky-200',
+  CANCELLED: 'bg-rose-50 text-rose-700 border-rose-200',
 
   // Event Severities
-  CRITICAL: 'bg-rose-500/15 text-rose-400 border-rose-500/40 font-semibold',
-  HIGH: 'bg-amber-500/15 text-amber-400 border-amber-500/40 font-semibold',
-  MEDIUM: 'bg-yellow-500/15 text-yellow-400 border-yellow-500/40',
-  LOW: 'bg-blue-500/15 text-blue-400 border-blue-500/40',
+  CRITICAL: 'bg-rose-50 text-rose-700 border-rose-200 font-semibold',
+  HIGH: 'bg-amber-50 text-amber-800 border-amber-200 font-semibold',
+  MEDIUM: 'bg-yellow-50 text-yellow-800 border-yellow-200',
+  LOW: 'bg-blue-50 text-blue-700 border-blue-200',
 
   // Event Statuses
-  OPEN: 'bg-rose-500/10 text-rose-400 border-rose-500/30',
-  INVESTIGATING: 'bg-amber-500/10 text-amber-400 border-amber-500/30',
-  RESOLVED: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30',
-  DISMISSED: 'bg-slate-500/10 text-slate-400 border-slate-500/30',
+  OPEN: 'bg-rose-50 text-rose-700 border-rose-200',
+  INVESTIGATING: 'bg-amber-50 text-amber-700 border-amber-200',
+  RESOLVED: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+  DISMISSED: 'bg-slate-100 text-slate-600 border-slate-200',
 
   // General
-  default: 'bg-slate-800 text-slate-300 border-slate-700'
+  default: 'bg-slate-100 text-slate-700 border-slate-200'
 };
 
 export default function Badge({ value, variant, size = 'sm', className = '' }) {
   const selectedVariant = VARIANTS[variant || value] || VARIANTS.default;
-  const sizeClasses = size === 'xs' ? 'px-1.5 py-0.5 text-[10px]' : 'px-2.5 py-1 text-xs';
+  const sizeClasses = size === 'xs' ? 'px-2 py-0.5 text-[10px]' : 'px-2.5 py-0.5 text-xs';
 
   return (
     <span
-      className={`inline-flex items-center rounded-md border font-mono tracking-wide ${sizeClasses} ${selectedVariant} ${className}`}
+      className={`inline-flex items-center font-medium rounded-md border tracking-wide ${sizeClasses} ${selectedVariant} ${className}`}
     >
       {value}
     </span>

@@ -10,6 +10,7 @@
     "migrate": "knex migrate:latest",
     "migrate:rollback": "knex migrate:rollback",
     "seed": "knex seed:run",
+    "sql": "node sql-cli.js",
     "test": "jest --runInBand --detectOpenHandles --forceExit"
   },
   "dependencies": {

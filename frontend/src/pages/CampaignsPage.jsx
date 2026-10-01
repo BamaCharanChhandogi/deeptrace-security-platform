@@ -6,13 +6,10 @@ import {
   Filter,
   UserPlus,
   Trash2,
-  Edit,
   Users,
   Calendar,
   ArrowRight,
-  CheckCircle,
-  XCircle,
-  Clock
+  FolderKanban
 } from 'lucide-react';
 import {
   getCampaigns,
@@ -60,7 +57,7 @@ export default function CampaignsPage() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Tenant users for member assignment dropdown
+  // Tenant Users for Member Assignment dropdown
   const [tenantUsers, setTenantUsers] = useState([]);
   const [selectedUserIdToAssign, setSelectedUserIdToAssign] = useState('');
 
@@ -84,16 +81,22 @@ export default function CampaignsPage() {
     }
   };
 
+  const fetchTenantUsers = async () => {
+    try {
+      const res = await getUsers({ limit: 100 });
+      setTenantUsers(res.data.data);
+    } catch {
+      // Ignore user list fetch error
+    }
+  };
+
   useEffect(() => {
     fetchCampaigns();
   }, [page, statusFilter]);
 
-  // Load tenant users for assignment
   useEffect(() => {
     if (canManage) {
-      getUsers({ limit: 100 })
-        .then((res) => setTenantUsers(res.data.data))
-        .catch(() => {});
+      fetchTenantUsers();
     }
   }, [canManage]);
 
@@ -104,12 +107,12 @@ export default function CampaignsPage() {
   };
 
   const openCampaignDetail = async (id) => {
-    setIsDetailLoading(true);
     setIsDetailOpen(true);
+    setIsDetailLoading(true);
     try {
       const res = await getCampaignById(id);
       setSelectedCampaign(res.data.data);
-    } catch (err) {
+    } catch {
       toast.error('Failed to load campaign details');
       setIsDetailOpen(false);
     } finally {
@@ -124,7 +127,13 @@ export default function CampaignsPage() {
       await createCampaign(formData);
       toast.success('Campaign created successfully');
       setIsCreateOpen(false);
-      setFormData({ name: '', description: '', status: 'DRAFT', start_date: '', end_date: '' });
+      setFormData({
+        name: '',
+        description: '',
+        status: 'DRAFT',
+        start_date: '',
+        end_date: ''
+      });
       fetchCampaigns();
     } catch (err) {
       toast.error(err.response?.data?.error?.message || 'Failed to create campaign');
@@ -136,12 +145,14 @@ export default function CampaignsPage() {
   const handleStatusTransition = async (newStatus) => {
     if (!selectedCampaign) return;
     try {
-      const res = await updateCampaign(selectedCampaign.id, { status: newStatus });
-      setSelectedCampaign((prev) => ({ ...prev, status: res.data.data.status }));
-      toast.success(`Status updated to ${newStatus}`);
+      await updateCampaign(selectedCampaign.id, { status: newStatus });
+      toast.success(`Campaign transitioned to ${newStatus}`);
+      // Reload details & list
+      const res = await getCampaignById(selectedCampaign.id);
+      setSelectedCampaign(res.data.data);
       fetchCampaigns();
     } catch (err) {
-      toast.error(err.response?.data?.error?.message || 'Failed to update status');
+      toast.error(err.response?.data?.error?.message || 'Invalid state transition');
     }
   };
 
@@ -181,7 +192,7 @@ export default function CampaignsPage() {
       const res = await getCampaignById(selectedCampaign.id);
       setSelectedCampaign(res.data.data);
       fetchCampaigns();
-    } catch (err) {
+    } catch {
       toast.error('Failed to remove member');
     }
   };
@@ -200,11 +211,13 @@ export default function CampaignsPage() {
 
   return (
     <div className="space-y-6">
-      {/* Header with DeepTrace Hero Typography */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-[#2C3078]">
+      {/* Header with DeepTrace Typography */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-5 border-b border-slate-200">
         <div>
-          <h1 className="dt-hero-title text-2xl sm:text-[39px] sm:leading-[42px] flex items-center gap-3">
-            <Target className="w-8 h-8 text-[#009CD9]" />
+          <h1 className="dt-hero-title text-2xl sm:text-[32px] sm:leading-[38px] flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-sky-50 flex items-center justify-center text-[#009CD9] shrink-0">
+              <FolderKanban className="w-5 h-5 stroke-[2]" />
+            </div>
             <span>Campaign Management</span>
           </h1>
           <p className="dt-body mt-1">
@@ -226,7 +239,7 @@ export default function CampaignsPage() {
       {/* Filter / Search Bar */}
       <div className="flex flex-col md:flex-row items-center gap-3">
         <form onSubmit={handleSearchSubmit} className="relative flex-1 w-full">
-          <Search className="w-4 h-4 text-[#94A3B8] absolute left-3.5 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             value={search}
@@ -237,7 +250,7 @@ export default function CampaignsPage() {
         </form>
 
         <div className="flex items-center gap-2 w-full md:w-auto">
-          <Filter className="w-4 h-4 text-[#94A3B8]" />
+          <Filter className="w-4 h-4 text-slate-400" />
           <select
             value={statusFilter}
             onChange={(e) => {
@@ -256,7 +269,7 @@ export default function CampaignsPage() {
       </div>
 
       {/* Campaigns Table */}
-      <div className="dt-card overflow-hidden">
+      <div className="bg-white rounded-xl border border-slate-200/90 shadow-xs overflow-hidden">
         {isLoading ? (
           <div className="py-20 flex justify-center">
             <LoadingSpinner size="lg" />
@@ -270,44 +283,44 @@ export default function CampaignsPage() {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="bg-slate-900/80 border-b border-slate-800 text-slate-400 uppercase font-mono text-[10px] tracking-wider">
+              <thead className="bg-slate-50 border-b border-slate-200 text-slate-600 uppercase font-semibold text-[11px] tracking-wider">
                 <tr>
-                  <th className="px-5 py-3">Campaign Name</th>
-                  <th className="px-5 py-3">Status</th>
-                  <th className="px-5 py-3">Team Assigned</th>
-                  <th className="px-5 py-3">Created By</th>
-                  <th className="px-5 py-3">Created Date</th>
-                  <th className="px-5 py-3 text-right">Actions</th>
+                  <th className="px-5 py-3.5">Campaign Name</th>
+                  <th className="px-5 py-3.5">Status</th>
+                  <th className="px-5 py-3.5">Team Assigned</th>
+                  <th className="px-5 py-3.5">Created By</th>
+                  <th className="px-5 py-3.5">Created Date</th>
+                  <th className="px-5 py-3.5 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60">
+              <tbody className="divide-y divide-slate-100">
                 {campaigns.map((camp) => (
                   <tr
                     key={camp.id}
-                    className="hover:bg-slate-900/40 transition group cursor-pointer"
+                    className="hover:bg-slate-50/70 transition group cursor-pointer"
                     onClick={() => openCampaignDetail(camp.id)}
                   >
                     <td className="px-5 py-3.5">
-                      <div className="font-semibold text-slate-200 group-hover:text-cyan-300 transition">
+                      <div className="font-semibold text-slate-900 group-hover:text-[#009CD9] transition">
                         {camp.name}
                       </div>
-                      <div className="text-[11px] text-slate-400 truncate max-w-xs mt-0.5">
+                      <div className="text-[11px] text-slate-500 truncate max-w-xs mt-0.5">
                         {camp.description || 'No description provided'}
                       </div>
                     </td>
                     <td className="px-5 py-3.5">
                       <Badge value={camp.status} variant={camp.status} />
                     </td>
-                    <td className="px-5 py-3.5 font-mono text-slate-300">
-                      <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-slate-900 border border-slate-800">
-                        <Users className="w-3 h-3 text-cyan-400" />
+                    <td className="px-5 py-3.5 text-slate-700">
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-50 border border-slate-200 font-medium text-[11px]">
+                        <Users className="w-3.5 h-3.5 text-[#009CD9]" />
                         {camp.member_count || 0} members
                       </span>
                     </td>
-                    <td className="px-5 py-3.5 text-slate-400 font-mono text-[11px]">
+                    <td className="px-5 py-3.5 text-slate-600 text-xs">
                       {camp.creator_name || 'System'}
                     </td>
-                    <td className="px-5 py-3.5 text-slate-400 font-mono text-[11px]">
+                    <td className="px-5 py-3.5 text-slate-500 text-xs">
                       {formatDate(camp.created_at)}
                     </td>
                     <td className="px-5 py-3.5 text-right">
@@ -316,7 +329,7 @@ export default function CampaignsPage() {
                           e.stopPropagation();
                           openCampaignDetail(camp.id);
                         }}
-                        className="px-2.5 py-1 rounded-lg border border-slate-800 bg-slate-900 text-[11px] text-slate-300 hover:text-cyan-300 hover:border-cyan-500/40 transition"
+                        className="px-3 py-1 rounded-lg border border-slate-200 bg-white text-xs font-medium text-slate-700 hover:text-[#009CD9] hover:border-[#009CD9] transition cursor-pointer"
                       >
                         Inspect ➔
                       </button>
@@ -339,7 +352,7 @@ export default function CampaignsPage() {
       >
         <form onSubmit={handleCreateCampaign} className="space-y-4">
           <div>
-            <label className="block text-xs font-medium text-slate-300 mb-1">
+            <label className="block text-xs font-semibold text-slate-700 mb-1.5">
               Campaign Name *
             </label>
             <input
@@ -348,12 +361,12 @@ export default function CampaignsPage() {
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               placeholder="e.g. Q4 Executive Spear-Phishing Drill"
-              className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-slate-100 focus:outline-none focus:border-cyan-500"
+              className="dt-input text-sm"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-slate-300 mb-1">
+            <label className="block text-xs font-semibold text-slate-700 mb-1.5">
               Description
             </label>
             <textarea
@@ -361,47 +374,47 @@ export default function CampaignsPage() {
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               placeholder="Detailed description of objectives, attack vector, or remediation steps..."
-              className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-slate-100 focus:outline-none focus:border-cyan-500"
+              className="dt-input text-sm"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5">
                 Start Date
               </label>
               <input
                 type="date"
                 value={formData.start_date}
                 onChange={(e) => setFormData({ ...formData, start_date: e.target.value })}
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-slate-100 focus:outline-none focus:border-cyan-500"
+                className="dt-input text-sm"
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-slate-700 mb-1.5">
                 End Date
               </label>
               <input
                 type="date"
                 value={formData.end_date}
                 onChange={(e) => setFormData({ ...formData, end_date: e.target.value })}
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-slate-100 focus:outline-none focus:border-cyan-500"
+                className="dt-input text-sm"
               />
             </div>
           </div>
 
-          <div className="flex justify-end gap-2 pt-3 border-t border-slate-800">
+          <div className="flex justify-end gap-2.5 pt-3 border-t border-slate-100">
             <button
               type="button"
               onClick={() => setIsCreateOpen(false)}
-              className="px-4 py-2 rounded-xl text-xs font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition"
+              className="btn-dt-secondary"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-4 py-2 rounded-xl text-xs font-semibold bg-cyan-600 hover:bg-cyan-500 text-white transition flex items-center gap-1.5"
+              className="btn-dt-action"
             >
               {isSubmitting ? 'Creating...' : 'Create Campaign'}
             </button>
@@ -423,28 +436,28 @@ export default function CampaignsPage() {
         ) : selectedCampaign ? (
           <div className="space-y-5 text-xs">
             {/* Overview & Status Progression */}
-            <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-3">
+            <div className="p-4 rounded-xl bg-slate-50/70 border border-slate-200/80 space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-slate-400 font-mono text-[10px] uppercase">Current Lifecycle</span>
+                <span className="text-slate-500 font-semibold uppercase text-[10px]">Current Lifecycle</span>
                 <Badge value={selectedCampaign.status} variant={selectedCampaign.status} />
               </div>
 
               {canManage && (
                 <div>
-                  <div className="text-[11px] text-slate-400 mb-2">Available State Transitions:</div>
+                  <div className="text-xs text-slate-600 font-medium mb-2">Available State Transitions:</div>
                   <div className="flex flex-wrap gap-2">
                     {getNextPossibleStatuses(selectedCampaign.status).map((nextStatus) => (
                       <button
                         key={nextStatus}
                         onClick={() => handleStatusTransition(nextStatus)}
-                        className="px-3 py-1.5 rounded-lg border border-cyan-500/30 bg-cyan-500/10 text-cyan-300 hover:bg-cyan-500/20 font-mono text-[11px] flex items-center gap-1 transition"
+                        className="px-3 py-1.5 rounded-lg border border-sky-200 bg-sky-50 text-[#009CD9] hover:bg-sky-100 font-semibold text-xs flex items-center gap-1.5 transition cursor-pointer"
                       >
                         <span>Transition to {nextStatus}</span>
-                        <ArrowRight className="w-3 h-3" />
+                        <ArrowRight className="w-3.5 h-3.5" />
                       </button>
                     ))}
                     {getNextPossibleStatuses(selectedCampaign.status).length === 0 && (
-                      <span className="text-slate-500 italic text-[11px]">
+                      <span className="text-slate-500 italic text-xs">
                         Campaign is in a terminal state ({selectedCampaign.status}) and cannot transition further.
                       </span>
                     )}
@@ -455,32 +468,32 @@ export default function CampaignsPage() {
 
             {/* Description & Metadata */}
             <div>
-              <h4 className="text-[11px] font-mono uppercase text-slate-400 mb-1">Description</h4>
-              <p className="p-3 rounded-lg bg-slate-900/50 border border-slate-800/80 text-slate-300">
+              <h4 className="text-xs font-semibold text-slate-700 mb-1">Description</h4>
+              <p className="p-3 rounded-lg bg-slate-50 border border-slate-200 text-slate-700 text-sm">
                 {selectedCampaign.description || 'No description entered.'}
               </p>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 font-mono text-[11px]">
-              <div className="p-2.5 rounded-lg bg-slate-900/50 border border-slate-800">
-                <span className="text-slate-500 block text-[10px]">Start Date</span>
-                <span className="text-slate-200">{formatDate(selectedCampaign.start_date)}</span>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
+              <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
+                <span className="text-slate-500 block text-[10px] uppercase font-semibold">Start Date</span>
+                <span className="text-slate-800 font-medium">{formatDate(selectedCampaign.start_date)}</span>
               </div>
-              <div className="p-2.5 rounded-lg bg-slate-900/50 border border-slate-800">
-                <span className="text-slate-500 block text-[10px]">End Date</span>
-                <span className="text-slate-200">{formatDate(selectedCampaign.end_date)}</span>
+              <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
+                <span className="text-slate-500 block text-[10px] uppercase font-semibold">End Date</span>
+                <span className="text-slate-800 font-medium">{formatDate(selectedCampaign.end_date)}</span>
               </div>
-              <div className="p-2.5 rounded-lg bg-slate-900/50 border border-slate-800">
-                <span className="text-slate-500 block text-[10px]">Lead Creator</span>
-                <span className="text-slate-200">{selectedCampaign.creator_name || 'System'}</span>
+              <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
+                <span className="text-slate-500 block text-[10px] uppercase font-semibold">Lead Creator</span>
+                <span className="text-slate-800 font-medium">{selectedCampaign.creator_name || 'System'}</span>
               </div>
             </div>
 
             {/* Assigned Team Members Section */}
-            <div className="border-t border-slate-800 pt-4">
+            <div className="border-t border-slate-100 pt-4">
               <div className="flex items-center justify-between mb-3">
-                <h4 className="font-semibold text-slate-200 flex items-center gap-2">
-                  <Users className="w-4 h-4 text-cyan-400" />
+                <h4 className="font-semibold text-slate-800 flex items-center gap-2 text-sm">
+                  <Users className="w-4 h-4 text-[#009CD9]" />
                   <span>Assigned Personnel ({selectedCampaign.members?.length || 0})</span>
                 </h4>
               </div>
@@ -491,7 +504,7 @@ export default function CampaignsPage() {
                   <select
                     value={selectedUserIdToAssign}
                     onChange={(e) => setSelectedUserIdToAssign(e.target.value)}
-                    className="flex-1 py-1.5 px-3 bg-slate-900 border border-slate-700 rounded-lg text-xs text-slate-200 focus:outline-none focus:border-cyan-500"
+                    className="dt-input text-xs py-2"
                   >
                     <option value="">Select team member to assign...</option>
                     {tenantUsers
@@ -505,7 +518,7 @@ export default function CampaignsPage() {
                   <button
                     type="submit"
                     disabled={!selectedUserIdToAssign}
-                    className="px-3 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 disabled:opacity-40 text-white font-medium text-xs transition flex items-center gap-1"
+                    className="btn-dt-action text-xs shrink-0 cursor-pointer"
                   >
                     <UserPlus className="w-3.5 h-3.5" />
                     <span>Assign</span>
@@ -519,18 +532,18 @@ export default function CampaignsPage() {
                   selectedCampaign.members.map((member) => (
                     <div
                       key={member.id}
-                      className="flex items-center justify-between p-2 rounded-lg bg-slate-900/60 border border-slate-800/80"
+                      className="flex items-center justify-between p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs"
                     >
                       <div>
-                        <span className="font-medium text-slate-200">{member.name}</span>{' '}
-                        <span className="text-[11px] text-slate-400 font-mono">({member.email})</span>
+                        <span className="font-semibold text-slate-800">{member.name}</span>{' '}
+                        <span className="text-slate-500">({member.email})</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <Badge value={member.role} variant={member.role} size="xs" />
                         {canManage && (
                           <button
                             onClick={() => handleRemoveMember(member.id)}
-                            className="p-1 text-slate-500 hover:text-rose-400 transition"
+                            className="p-1 text-slate-400 hover:text-rose-600 transition cursor-pointer"
                             title="Remove from campaign"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
@@ -540,18 +553,18 @@ export default function CampaignsPage() {
                     </div>
                   ))
                 ) : (
-                  <p className="text-slate-500 text-xs italic py-2">No team members assigned yet.</p>
+                  <p className="text-slate-400 text-xs italic py-2">No team members assigned yet.</p>
                 )}
               </div>
             </div>
 
             {/* Admin Delete Action */}
             {canDelete && (
-              <div className="border-t border-slate-800 pt-4 flex justify-between items-center">
-                <span className="text-[11px] text-slate-500">Admin Action: Permanent Deletion</span>
+              <div className="border-t border-slate-100 pt-4 flex justify-between items-center">
+                <span className="text-xs text-slate-500">Admin Action: Permanent Deletion</span>
                 <button
                   onClick={() => handleDeleteCampaign(selectedCampaign.id)}
-                  className="px-3 py-1.5 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 text-xs font-medium flex items-center gap-1.5 transition"
+                  className="px-3 py-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
                   <span>Delete Campaign</span>

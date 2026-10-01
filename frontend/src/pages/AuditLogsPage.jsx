@@ -58,11 +58,13 @@ export default function AuditLogsPage() {
 
   return (
     <div className="space-y-6">
-      {/* Header with DeepTrace Hero Typography */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-[#2C3078]">
+      {/* Header with DeepTrace Typography */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-5 border-b border-slate-200">
         <div>
-          <h1 className="dt-hero-title text-2xl sm:text-[39px] sm:leading-[42px] flex items-center gap-3">
-            <FileText className="w-8 h-8 text-[#009CD9]" />
+          <h1 className="dt-hero-title text-2xl sm:text-[32px] sm:leading-[38px] flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-sky-50 flex items-center justify-center text-[#009CD9] shrink-0">
+              <FileText className="w-5 h-5 stroke-[2]" />
+            </div>
             <span>Immutable Audit Trail</span>
           </h1>
           <p className="dt-body mt-1">
@@ -70,7 +72,7 @@ export default function AuditLogsPage() {
           </p>
         </div>
 
-        <div className="px-3.5 py-1.5 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-mono font-semibold self-start sm:self-auto">
+        <div className="px-3 py-1.5 rounded-lg bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold self-start sm:self-auto">
           RESTRICTED: ADMIN ONLY
         </div>
       </div>
@@ -78,7 +80,7 @@ export default function AuditLogsPage() {
       {/* Filter / Search Bar */}
       <div className="flex flex-col md:flex-row items-center gap-3">
         <form onSubmit={handleSearchSubmit} className="relative flex-1 w-full">
-          <Search className="w-4 h-4 text-[#94A3B8] absolute left-3.5 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             value={search}
@@ -94,7 +96,7 @@ export default function AuditLogsPage() {
             setActionFilter(e.target.value);
             setPage(1);
           }}
-          className="dt-input w-full md:w-60 text-sm"
+          className="dt-input w-full md:w-64 text-sm"
         >
           <option value="">All Actions</option>
           <option value="LOGIN_SUCCESS">LOGIN_SUCCESS</option>
@@ -111,7 +113,7 @@ export default function AuditLogsPage() {
       </div>
 
       {/* Audit Log Table */}
-      <div className="dt-card overflow-hidden">
+      <div className="bg-white rounded-xl border border-slate-200/90 shadow-xs overflow-hidden">
         {isLoading ? (
           <div className="py-20 flex justify-center">
             <LoadingSpinner size="lg" />
@@ -125,46 +127,46 @@ export default function AuditLogsPage() {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="bg-slate-900/80 border-b border-slate-800 text-slate-400 uppercase font-mono text-[10px] tracking-wider">
+              <thead className="bg-slate-50 border-b border-slate-200 text-slate-600 uppercase font-semibold text-[11px] tracking-wider">
                 <tr>
-                  <th className="px-5 py-3">Timestamp</th>
-                  <th className="px-5 py-3">Action</th>
-                  <th className="px-5 py-3">Actor / Principal</th>
-                  <th className="px-5 py-3">Entity Type</th>
-                  <th className="px-5 py-3">IP Address</th>
-                  <th className="px-5 py-3 text-right">Details</th>
+                  <th className="px-5 py-3.5">Timestamp</th>
+                  <th className="px-5 py-3.5">Action</th>
+                  <th className="px-5 py-3.5">Actor / Principal</th>
+                  <th className="px-5 py-3.5">Entity Type</th>
+                  <th className="px-5 py-3.5">IP Address</th>
+                  <th className="px-5 py-3.5 text-right">Details</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60 font-mono text-[11px]">
+              <tbody className="divide-y divide-slate-100">
                 {logs.map((log) => (
                   <tr
                     key={log.id}
                     onClick={() => setSelectedLog(log)}
-                    className="hover:bg-slate-900/40 transition group cursor-pointer"
+                    className="hover:bg-slate-50/70 transition group cursor-pointer"
                   >
-                    <td className="px-5 py-3 text-slate-400 whitespace-nowrap">
+                    <td className="px-5 py-3.5 text-slate-500 whitespace-nowrap text-xs">
                       {formatDateTime(log.created_at)}
                     </td>
-                    <td className="px-5 py-3">
-                      <span className="font-semibold text-cyan-400">{log.action}</span>
+                    <td className="px-5 py-3.5">
+                      <span className="font-mono font-semibold text-[#009CD9] text-xs">{log.action}</span>
                     </td>
-                    <td className="px-5 py-3 font-sans">
-                      <div className="text-slate-200 font-medium">{log.actor_name || 'System / Unauth'}</div>
-                      <div className="text-[10px] text-slate-400 font-mono">{log.actor_email || '—'}</div>
+                    <td className="px-5 py-3.5">
+                      <div className="text-slate-900 font-semibold">{log.actor_name || 'System / Unauth'}</div>
+                      <div className="text-[11px] text-slate-500">{log.actor_email || '—'}</div>
                     </td>
-                    <td className="px-5 py-3 text-slate-400">
+                    <td className="px-5 py-3.5 text-slate-600 text-xs">
                       {log.entity_type ? `${log.entity_type}` : '—'}
                     </td>
-                    <td className="px-5 py-3 text-slate-400 font-mono text-[10px]">
+                    <td className="px-5 py-3.5 text-slate-500 font-mono text-[11px]">
                       {log.ip_address || '127.0.0.1'}
                     </td>
-                    <td className="px-5 py-3 text-right">
+                    <td className="px-5 py-3.5 text-right">
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
                           setSelectedLog(log);
                         }}
-                        className="px-2 py-0.5 rounded bg-slate-800 text-[10px] text-slate-300 hover:text-cyan-300 hover:bg-slate-700 transition"
+                        className="px-3 py-1 rounded-lg border border-slate-200 bg-white text-xs font-medium text-slate-700 hover:text-[#009CD9] hover:border-[#009CD9] transition cursor-pointer"
                       >
                         Inspect
                       </button>
@@ -186,29 +188,29 @@ export default function AuditLogsPage() {
         title="Audit Event Details"
       >
         {selectedLog && (
-          <div className="space-y-4 text-xs font-mono">
-            <div className="grid grid-cols-2 gap-2 text-[11px]">
-              <div className="p-2.5 rounded bg-slate-900 border border-slate-800">
-                <span className="text-slate-500 block text-[10px]">ACTION</span>
-                <span className="text-cyan-400 font-semibold">{selectedLog.action}</span>
+          <div className="space-y-4 text-xs">
+            <div className="grid grid-cols-2 gap-2.5">
+              <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
+                <span className="text-slate-500 block text-[10px] uppercase font-semibold">ACTION</span>
+                <span className="text-[#009CD9] font-mono font-semibold">{selectedLog.action}</span>
               </div>
-              <div className="p-2.5 rounded bg-slate-900 border border-slate-800">
-                <span className="text-slate-500 block text-[10px]">TIMESTAMP</span>
-                <span className="text-slate-300">{formatDateTime(selectedLog.created_at)}</span>
+              <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
+                <span className="text-slate-500 block text-[10px] uppercase font-semibold">TIMESTAMP</span>
+                <span className="text-slate-700 font-medium">{formatDateTime(selectedLog.created_at)}</span>
               </div>
-              <div className="p-2.5 rounded bg-slate-900 border border-slate-800">
-                <span className="text-slate-500 block text-[10px]">ACTOR</span>
-                <span className="text-slate-300 font-sans">{selectedLog.actor_name} ({selectedLog.actor_email})</span>
+              <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
+                <span className="text-slate-500 block text-[10px] uppercase font-semibold">ACTOR</span>
+                <span className="text-slate-800 font-medium">{selectedLog.actor_name} ({selectedLog.actor_email})</span>
               </div>
-              <div className="p-2.5 rounded bg-slate-900 border border-slate-800">
-                <span className="text-slate-500 block text-[10px]">IP ADDRESS</span>
-                <span className="text-slate-300">{selectedLog.ip_address || 'Unknown'}</span>
+              <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
+                <span className="text-slate-500 block text-[10px] uppercase font-semibold">IP ADDRESS</span>
+                <span className="text-slate-700 font-mono">{selectedLog.ip_address || 'Unknown'}</span>
               </div>
             </div>
 
             <div>
-              <span className="text-slate-400 block text-[10px] uppercase mb-1">Raw Mutation Payload</span>
-              <pre className="p-3 rounded-lg bg-slate-950 text-emerald-400 border border-slate-800 overflow-x-auto text-[11px]">
+              <span className="text-xs font-semibold text-slate-700 block mb-1.5">Raw Mutation Payload</span>
+              <pre className="p-3 rounded-lg bg-slate-900 text-emerald-400 font-mono text-[11px] border border-slate-800 overflow-x-auto">
                 {typeof selectedLog.details === 'string'
                   ? selectedLog.details
                   : JSON.stringify(selectedLog.details, null, 2) || '{}'}
@@ -217,8 +219,8 @@ export default function AuditLogsPage() {
 
             {selectedLog.user_agent && (
               <div>
-                <span className="text-slate-500 block text-[10px] uppercase mb-1">User Agent</span>
-                <p className="text-[10px] text-slate-400 break-all bg-slate-900 p-2 rounded border border-slate-800">
+                <span className="text-xs font-semibold text-slate-700 block mb-1">User Agent</span>
+                <p className="text-[11px] text-slate-600 break-all bg-slate-50 p-2.5 rounded-lg border border-slate-200">
                   {selectedLog.user_agent}
                 </p>
               </div>

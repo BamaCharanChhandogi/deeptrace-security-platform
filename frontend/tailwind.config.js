@@ -4,20 +4,20 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  darkMode: 'class',
   theme: {
     extend: {
       colors: {
         deeptrace: {
-          bg: '#0E1033',          // Authentic DeepTrace dark navy backdrop
-          surface: '#18194B',     // Exact DeepTrace brand card/elementor navy
-          surfaceHover: '#1F215E',
-          surfaceLight: '#23266A',
-          border: '#2C3078',      // Elegant subtle border
-          accent: '#009CD9',      // Exact DeepTrace brand cyan/blue: rgb(0, 156, 217)
-          accentHover: '#0084B8',
-          textLight: '#FCFCFC',   // Exact DeepTrace hero text: rgb(252, 252, 252)
-          muted: '#94A3B8'
+          navy: '#18194B',        // Exact DeepTrace brand navy
+          navyDark: '#10133B',    // Dark navy for sidebar
+          navyHover: '#23266A',
+          cyan: '#009CD9',        // Exact DeepTrace brand cyan: rgb(0, 156, 217)
+          cyanHover: '#0084B8',
+          cyanLight: '#E0F2FE',   // Soft pastel cyan for badges/icons
+          canvas: '#F8FAFC',      // Crisp light SaaS canvas
+          card: '#FFFFFF',        // Pure white card surfaces
+          border: '#E2E8F0',      // Clean slate border
+          muted: '#64748B'        // Slate-500 body text
         }
       },
       fontFamily: {

@@ -17,6 +17,7 @@ A production-grade, multi-tenant cybersecurity management platform developed for
    - [Q2: JWT Revocation Strategies](#q2-jwt-revocation-strategies)
    - [Q3: Troubleshooting 500 Errors in Production](#q3-troubleshooting-500-errors-in-production)
 9. [Recommended 5–10 Minute Demo Video Walkthrough](#recommended-510-minute-demo-video-walkthrough)
+10. [Interactive SQL Practice & Hands-On Lab](#10-interactive-sql-practice--hands-on-lab)
 
 ---
 
