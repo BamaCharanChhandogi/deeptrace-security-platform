@@ -170,10 +170,6 @@ export default function LoginPage() {
               ))}
             </div>
           </div>
-
-          <div className="p-4 rounded-xl bg-sky-50/70 border border-sky-100 text-xs text-slate-600">
-            <span className="text-[#009CD9] font-semibold">Zero-Trust Notice:</span> Sign in as <strong className="text-slate-800">Tenant B Admin</strong> to verify that Tenant A campaigns and events return <code className="text-[#009CD9] bg-white px-1.5 py-0.5 rounded border border-sky-200 font-mono font-medium">404 Not Found</code>.
-          </div>
         </div>
       </div>
     </div>
