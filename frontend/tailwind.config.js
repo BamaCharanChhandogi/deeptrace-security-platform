@@ -8,21 +8,22 @@ export default {
   theme: {
     extend: {
       colors: {
-        cyber: {
-          950: '#090d16',
-          900: '#0f172a',
-          850: '#131e35',
-          800: '#1e293b',
-          700: '#334155',
-          600: '#475569',
-          accent: '#06b6d4',
-          accentHover: '#0891b2',
-          neon: '#10b981'
+        deeptrace: {
+          bg: '#0E1033',          // Authentic DeepTrace dark navy backdrop
+          surface: '#18194B',     // Exact DeepTrace brand card/elementor navy
+          surfaceHover: '#1F215E',
+          surfaceLight: '#23266A',
+          border: '#2C3078',      // Elegant subtle border
+          accent: '#009CD9',      // Exact DeepTrace brand cyan/blue: rgb(0, 156, 217)
+          accentHover: '#0084B8',
+          textLight: '#FCFCFC',   // Exact DeepTrace hero text: rgb(252, 252, 252)
+          muted: '#94A3B8'
         }
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        mono: ['JetBrains Mono', 'Fira Code', 'monospace']
+        sans: ['Inter', 'sans-serif'],
+        heading: ['Roboto', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace']
       }
     },
   },
