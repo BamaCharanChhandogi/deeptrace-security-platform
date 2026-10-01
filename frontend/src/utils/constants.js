@@ -28,8 +28,9 @@ export const EVENT_STATUSES = {
 // 1-Click Quick Demo accounts for evaluators
 export const DEMO_USERS = [
   {
-    label: 'Tenant A — Admin',
-    desc: 'CyberShield Corp • Full Admin Access',
+    name: 'Sarah Connor',
+    label: 'Sarah Connor — Admin',
+    desc: 'Tenant A • CyberShield Corp (Full Access)',
     email: 'admin@cybershield.io',
     password: 'Password123!',
     role: 'ADMIN',
@@ -37,8 +38,9 @@ export const DEMO_USERS = [
     color: 'emerald'
   },
   {
-    label: 'Tenant A — Manager',
-    desc: 'CyberShield Corp • Campaigns & Events',
+    name: 'John Miller',
+    label: 'John Miller — Manager',
+    desc: 'Tenant A • CyberShield Corp (Campaigns & Events)',
     email: 'manager@cybershield.io',
     password: 'Password123!',
     role: 'MANAGER',
@@ -46,8 +48,9 @@ export const DEMO_USERS = [
     color: 'amber'
   },
   {
-    label: 'Tenant A — Analyst',
-    desc: 'CyberShield Corp • Read-Only View',
+    name: 'Alex Morgan',
+    label: 'Alex Morgan — Analyst',
+    desc: 'Tenant A • CyberShield Corp (Read-Only User)',
     email: 'analyst@cybershield.io',
     password: 'Password123!',
     role: 'USER',
@@ -55,8 +58,9 @@ export const DEMO_USERS = [
     color: 'cyan'
   },
   {
-    label: 'Tenant B — Admin (Cross-Tenant Test)',
-    desc: 'SentinelOps Inc • Isolated Organization',
+    name: 'Kyle Reese',
+    label: 'Kyle Reese — Admin (Tenant B)',
+    desc: 'Tenant B • SentinelOps Inc (Cross-Tenant Test)',
     email: 'admin@sentinelops.io',
     password: 'Password123!',
     role: 'ADMIN',
