@@ -87,14 +87,14 @@ export default function UsersPage() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-2 border-b border-slate-800">
+      {/* Header with DeepTrace Hero Typography */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-[#2C3078]">
         <div>
-          <h1 className="text-xl font-bold text-slate-100 flex items-center gap-2">
-            <Users className="w-5 h-5 text-cyan-400" />
+          <h1 className="dt-hero-title text-2xl sm:text-[39px] sm:leading-[42px] flex items-center gap-3">
+            <Users className="w-8 h-8 text-[#009CD9]" />
             <span>Personnel & Access Directory</span>
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="dt-body mt-1">
             Registered team members with access to this tenant organization.
           </p>
         </div>
@@ -102,7 +102,7 @@ export default function UsersPage() {
         {isAdmin && (
           <button
             onClick={() => setIsCreateOpen(true)}
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-semibold shadow-lg shadow-cyan-950/30 transition self-start sm:self-auto"
+            className="btn-dt-action self-start sm:self-auto cursor-pointer"
           >
             <UserPlus className="w-4 h-4" />
             <span>Provision User</span>
@@ -113,13 +113,13 @@ export default function UsersPage() {
       {/* Filter / Search Bar */}
       <div className="flex flex-col md:flex-row items-center gap-3">
         <form onSubmit={handleSearchSubmit} className="relative flex-1 w-full">
-          <Search className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-[#94A3B8] absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by name or email address..."
-            className="w-full pl-9 pr-4 py-2 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500"
+            className="dt-input pl-10 text-sm"
           />
         </form>
 
@@ -129,7 +129,7 @@ export default function UsersPage() {
             setRoleFilter(e.target.value);
             setPage(1);
           }}
-          className="w-full md:w-44 py-2 px-3 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-cyan-500"
+          className="dt-input w-full md:w-48 text-sm"
         >
           <option value="">All Roles</option>
           <option value="ADMIN">ADMIN</option>
@@ -139,7 +139,7 @@ export default function UsersPage() {
       </div>
 
       {/* Users Table */}
-      <div className="cyber-panel rounded-xl border border-slate-800 overflow-hidden">
+      <div className="dt-card overflow-hidden">
         {isLoading ? (
           <div className="py-20 flex justify-center">
             <LoadingSpinner size="lg" />

@@ -5,7 +5,6 @@ import {
   ShieldAlert,
   AlertTriangle,
   Activity,
-  ArrowUpRight,
   RefreshCw
 } from 'lucide-react';
 import { getDashboardStats } from '../api/endpoints';
@@ -39,24 +38,24 @@ export default function DashboardPage() {
 
   if (isLoading && !stats) {
     return (
-      <div className="py-20 flex justify-center">
+      <div className="py-24 flex justify-center">
         <LoadingSpinner size="lg" />
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
-      {/* Top Banner / Welcome */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-2 border-b border-slate-800">
+    <div className="space-y-8">
+      {/* Top Banner with DeepTrace Hero Typography */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-[#2C3078]">
         <div>
-          <h1 className="text-xl font-bold text-slate-100 flex items-center gap-2">
+          <h1 className="dt-hero-title text-2xl sm:text-[39px] sm:leading-[42px] flex flex-wrap items-center gap-3">
             <span>Security Command Center</span>
-            <span className="text-xs px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 font-mono">
+            <span className="text-xs px-3 py-1 rounded-full bg-[#009CD9]/15 text-[#009CD9] border border-[#009CD9]/30 font-mono font-semibold">
               {user?.tenantName}
             </span>
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="dt-body mt-2">
             Real-time security posture, active campaigns, and audit activity for your organization.
           </p>
         </div>
@@ -64,15 +63,15 @@ export default function DashboardPage() {
         <button
           onClick={loadStats}
           disabled={isLoading}
-          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-slate-800 bg-slate-900 text-xs font-medium text-slate-300 hover:text-white hover:border-slate-700 transition self-start sm:self-auto"
+          className="btn-dt-quote flex items-center gap-2 self-start sm:self-auto cursor-pointer"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin' : ''}`} />
-          <span>Refresh</span>
+          <span>Refresh Telemetry</span>
         </button>
       </div>
 
       {/* KPI Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         <StatCard
           title="Active Campaigns"
           value={stats?.campaigns?.active || 0}
@@ -95,7 +94,7 @@ export default function DashboardPage() {
           color="amber"
         />
         <StatCard
-          title="Tenant Users"
+          title="Tenant Personnel"
           value={stats?.users?.total || 0}
           subtitle="Active team members"
           icon={Users}
@@ -106,11 +105,13 @@ export default function DashboardPage() {
       {/* Second Row: Event Severity Breakdown & Campaign Status */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Severity Matrix */}
-        <div className="cyber-panel p-5 rounded-xl border border-slate-800">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-300 font-mono flex items-center gap-2">
-              <ShieldAlert className="w-4 h-4 text-cyan-400" />
-              Event Severity Breakdown
+        <div className="dt-card p-6">
+          <div className="flex items-center justify-between mb-5">
+            <h3 className="dt-card-title flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-[#009CD9]/15 flex items-center justify-center text-[#009CD9]">
+                <ShieldAlert className="w-4 h-4" />
+              </div>
+              <span>Event Severity Breakdown</span>
             </h3>
           </div>
           <div className="space-y-3">
@@ -120,23 +121,25 @@ export default function DashboardPage() {
               { level: 'MEDIUM', count: stats?.events?.bySeverity?.MEDIUM || 0, color: 'bg-yellow-500' },
               { level: 'LOW', count: stats?.events?.bySeverity?.LOW || 0, color: 'bg-blue-500' }
             ].map((item) => (
-              <div key={item.level} className="flex items-center justify-between p-2.5 rounded-lg bg-slate-900/60 border border-slate-800/80">
-                <div className="flex items-center gap-2">
-                  <span className={`w-2 h-2 rounded-full ${item.color}`} />
-                  <span className="text-xs font-mono text-slate-300">{item.level}</span>
+              <div key={item.level} className="flex items-center justify-between p-3 rounded-lg bg-[#10133B] border border-[#2C3078]">
+                <div className="flex items-center gap-2.5">
+                  <span className={`w-2.5 h-2.5 rounded-full ${item.color}`} />
+                  <span className="font-mono text-xs text-[#FCFCFC] font-medium">{item.level}</span>
                 </div>
-                <span className="text-xs font-bold font-mono text-slate-100">{item.count}</span>
+                <span className="font-heading font-bold text-sm text-[#FCFCFC]">{item.count}</span>
               </div>
             ))}
           </div>
         </div>
 
         {/* Campaign Status Breakdown */}
-        <div className="cyber-panel p-5 rounded-xl border border-slate-800">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-300 font-mono flex items-center gap-2">
-              <Target className="w-4 h-4 text-emerald-400" />
-              Campaign Status Breakdown
+        <div className="dt-card p-6">
+          <div className="flex items-center justify-between mb-5">
+            <h3 className="dt-card-title flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-[#009CD9]/15 flex items-center justify-center text-[#009CD9]">
+                <Target className="w-4 h-4" />
+              </div>
+              <span>Campaign Status Breakdown</span>
             </h3>
           </div>
           <div className="space-y-3">
@@ -146,44 +149,46 @@ export default function DashboardPage() {
               { status: 'COMPLETED', count: stats?.campaigns?.completed || 0, variant: 'COMPLETED' },
               { status: 'CANCELLED', count: stats?.campaigns?.cancelled || 0, variant: 'CANCELLED' }
             ].map((item) => (
-              <div key={item.status} className="flex items-center justify-between p-2.5 rounded-lg bg-slate-900/60 border border-slate-800/80">
-                <Badge value={item.status} variant={item.variant} size="xs" />
-                <span className="text-xs font-bold font-mono text-slate-100">{item.count}</span>
+              <div key={item.status} className="flex items-center justify-between p-3 rounded-lg bg-[#10133B] border border-[#2C3078]">
+                <Badge value={item.status} variant={item.variant} size="sm" />
+                <span className="font-heading font-bold text-sm text-[#FCFCFC]">{item.count}</span>
               </div>
             ))}
           </div>
         </div>
 
         {/* Recent Audit Activity Feed */}
-        <div className="cyber-panel p-5 rounded-xl border border-slate-800">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-300 font-mono flex items-center gap-2">
-              <Activity className="w-4 h-4 text-cyan-400" />
-              Recent Audit Activity
+        <div className="dt-card p-6">
+          <div className="flex items-center justify-between mb-5">
+            <h3 className="dt-card-title flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-[#009CD9]/15 flex items-center justify-center text-[#009CD9]">
+                <Activity className="w-4 h-4" />
+              </div>
+              <span>Recent Audit Activity</span>
             </h3>
           </div>
-          <div className="space-y-2.5 overflow-y-auto max-h-[260px] pr-1">
+          <div className="space-y-3 overflow-y-auto max-h-[270px] pr-1">
             {stats?.recentActivity?.length > 0 ? (
               stats.recentActivity.map((log) => (
                 <div
                   key={log.id}
-                  className="p-2.5 rounded-lg bg-slate-900/60 border border-slate-800/80 text-xs flex flex-col gap-1"
+                  className="p-3 rounded-lg bg-[#10133B] border border-[#2C3078] text-xs flex flex-col gap-1"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-mono text-[11px] text-cyan-400 font-semibold truncate max-w-[170px]">
+                    <span className="font-mono text-xs text-[#009CD9] font-semibold truncate max-w-[170px]">
                       {log.action}
                     </span>
-                    <span className="text-[10px] text-slate-500 font-mono">
+                    <span className="text-[10px] text-[#94A3B8] font-mono">
                       {formatTimeAgo(log.created_at)}
                     </span>
                   </div>
-                  <div className="text-[11px] text-slate-400 truncate">
-                    by <span className="text-slate-200">{log.actor_name || 'System'}</span>
+                  <div className="text-xs text-[#94A3B8] truncate">
+                    by <span className="text-[#FCFCFC] font-medium">{log.actor_name || 'System'}</span>
                   </div>
                 </div>
               ))
             ) : (
-              <p className="text-xs text-slate-500 text-center py-8">No recent activity recorded.</p>
+              <p className="dt-body text-center py-10">No recent activity recorded.</p>
             )}
           </div>
         </div>

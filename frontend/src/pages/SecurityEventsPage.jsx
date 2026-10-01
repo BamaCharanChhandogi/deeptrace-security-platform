@@ -148,14 +148,14 @@ export default function SecurityEventsPage() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-2 border-b border-slate-800">
+      {/* Header with DeepTrace Hero Typography */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-[#2C3078]">
         <div>
-          <h1 className="text-xl font-bold text-slate-100 flex items-center gap-2">
-            <ShieldAlert className="w-5 h-5 text-rose-400" />
-            <span>Security Incident & Event Management</span>
+          <h1 className="dt-hero-title text-2xl sm:text-[39px] sm:leading-[42px] flex items-center gap-3">
+            <ShieldAlert className="w-8 h-8 text-rose-400" />
+            <span>Incident & Event Management</span>
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="dt-body mt-1">
             Real-time feed of telemetry, attack attempts, and anomaly detections.
           </p>
         </div>
@@ -163,7 +163,7 @@ export default function SecurityEventsPage() {
         {canManage && (
           <button
             onClick={() => setIsCreateOpen(true)}
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold shadow-lg shadow-rose-950/30 transition self-start sm:self-auto"
+            className="btn-dt-action bg-rose-600 hover:bg-rose-500 self-start sm:self-auto cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             <span>Record Incident</span>
@@ -174,13 +174,13 @@ export default function SecurityEventsPage() {
       {/* Filter / Search Bar */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
         <form onSubmit={handleSearchSubmit} className="relative md:col-span-2">
-          <Search className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-[#94A3B8] absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by description, event type, or source..."
-            className="w-full pl-9 pr-4 py-2 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500"
+            className="dt-input pl-10 text-sm"
           />
         </form>
 
@@ -190,7 +190,7 @@ export default function SecurityEventsPage() {
             setSeverityFilter(e.target.value);
             setPage(1);
           }}
-          className="py-2 px-3 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-cyan-500"
+          className="dt-input text-sm"
         >
           <option value="">All Severities</option>
           <option value="CRITICAL">Critical</option>
@@ -205,7 +205,7 @@ export default function SecurityEventsPage() {
             setStatusFilter(e.target.value);
             setPage(1);
           }}
-          className="py-2 px-3 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-cyan-500"
+          className="dt-input text-sm"
         >
           <option value="">All Statuses</option>
           <option value="OPEN">Open</option>
@@ -216,7 +216,7 @@ export default function SecurityEventsPage() {
       </div>
 
       {/* Events Table */}
-      <div className="cyber-panel rounded-xl border border-slate-800 overflow-hidden">
+      <div className="dt-card overflow-hidden">
         {isLoading ? (
           <div className="py-20 flex justify-center">
             <LoadingSpinner size="lg" />

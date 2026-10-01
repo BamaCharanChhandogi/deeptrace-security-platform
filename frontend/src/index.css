@@ -7,9 +7,8 @@
     background-color: #0E1033;
     color: #FCFCFC;
     font-family: 'Inter', sans-serif;
-  }
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
   }
 }
 
@@ -18,42 +17,152 @@
   width: 6px;
   height: 6px;
 }
-
 ::-webkit-scrollbar-track {
   background: #0E1033;
 }
-
 ::-webkit-scrollbar-thumb {
   background: #2C3078;
   border-radius: 4px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
   background: #009CD9;
 }
 
-/* DeepTrace Signature Panels */
-.cyber-panel {
-  background-color: #18194B;
-  border: 1px solid #2C3078;
-  border-radius: 12px;
+/* =========================================================================
+   EXACT DEEPTRACE DESIGN SYSTEM (Extracted from deeptrace.in inspect tools)
+   ========================================================================= */
+
+/* Hero / Main Page Title: Roboto, 500 weight, 39px size, 42px line-height, #FCFCFC */
+.dt-hero-title {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 39px;
+  line-height: 42px;
+  color: #FCFCFC;
+  letter-spacing: -0.5px;
 }
 
-.cyber-panel-glow {
-  box-shadow: 0 4px 20px -2px rgba(0, 156, 217, 0.15);
+/* Section Sub-heading: Inter, 600 weight, 26px size, 35px line-height, #009CD9 */
+.dt-section-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 35px;
+  color: #009CD9;
 }
 
-/* Authentic DeepTrace Buttons */
-.btn-deeptrace {
+/* Card Heading: Inter, 600 weight, 18px size, 24px line-height, #FCFCFC */
+.dt-card-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  color: #FCFCFC;
+}
+
+/* Standard Body / Descriptions: Inter, 400 weight, 14px size, #94A3B8 */
+.dt-body {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #94A3B8;
+}
+
+/* Primary Pill Button (Exact like 'VIEW SERVICES >' on deeptrace.in) */
+.btn-dt-pill {
   background-color: #009CD9;
   color: #FFFFFF;
   font-family: 'Roboto', sans-serif;
   font-weight: 500;
-  border-radius: 8px;
+  font-size: 13px;
+  line-height: 18px;
+  border-radius: 9999px;
+  padding: 10px 24px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   transition: all 0.2s ease-in-out;
+  box-shadow: 0 4px 15px rgba(0, 156, 217, 0.3);
+}
+.btn-dt-pill:hover {
+  background-color: #0084B8;
+  box-shadow: 0 6px 20px rgba(0, 156, 217, 0.45);
+  transform: translateY(-1px);
 }
 
-.btn-deeptrace:hover {
+/* Navy Quote Button (Exact .elementor-button style on deeptrace.in) */
+.btn-dt-quote {
+  background-color: #18194B;
+  color: #FFFFFF;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 6px;
+  padding: 8px 18px;
+  border: 1px solid #2C3078;
+  transition: all 0.2s ease;
+}
+.btn-dt-quote:hover {
+  background-color: #23266A;
+  border-color: #009CD9;
+}
+
+/* Rounded Action Button (For CRUD forms, modals, tables) */
+.btn-dt-action {
+  background-color: #009CD9;
+  color: #FFFFFF;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  border-radius: 8px;
+  padding: 10px 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+.btn-dt-action:hover {
   background-color: #0084B8;
-  box-shadow: 0 0 15px rgba(0, 156, 217, 0.4);
+}
+
+/* DeepTrace Surface Card (Navy container with 14px border radius) */
+.cyber-panel, .dt-card {
+  background-color: #18194B;
+  border: 1px solid #2C3078;
+  border-radius: 14px;
+}
+
+/* DeepTrace Feature Icon Box (From 'Here what makes us Different' section) */
+.dt-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background-color: #009CD9;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Form Inputs matching DeepTrace design */
+.dt-input {
+  background-color: #10133B;
+  border: 1px solid #2C3078;
+  border-radius: 8px;
+  color: #FCFCFC;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  padding: 10px 14px;
+  width: 100%;
+  transition: border-color 0.2s ease;
+}
+.dt-input:focus {
+  outline: none;
+  border-color: #009CD9;
+  box-shadow: 0 0 0 1px #009CD9;
 }

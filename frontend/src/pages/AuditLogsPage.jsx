@@ -58,19 +58,19 @@ export default function AuditLogsPage() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-2 border-b border-slate-800">
+      {/* Header with DeepTrace Hero Typography */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-[#2C3078]">
         <div>
-          <h1 className="text-xl font-bold text-slate-100 flex items-center gap-2">
-            <FileText className="w-5 h-5 text-cyan-400" />
+          <h1 className="dt-hero-title text-2xl sm:text-[39px] sm:leading-[42px] flex items-center gap-3">
+            <FileText className="w-8 h-8 text-[#009CD9]" />
             <span>Immutable Audit Trail</span>
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="dt-body mt-1">
             Cryptographically sealed and timestamped log of all state modifications across your organization.
           </p>
         </div>
 
-        <div className="px-3 py-1.5 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-mono self-start sm:self-auto">
+        <div className="px-3.5 py-1.5 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-mono font-semibold self-start sm:self-auto">
           RESTRICTED: ADMIN ONLY
         </div>
       </div>
@@ -78,13 +78,13 @@ export default function AuditLogsPage() {
       {/* Filter / Search Bar */}
       <div className="flex flex-col md:flex-row items-center gap-3">
         <form onSubmit={handleSearchSubmit} className="relative flex-1 w-full">
-          <Search className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-[#94A3B8] absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by action, entity type, actor name or email..."
-            className="w-full pl-9 pr-4 py-2 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500"
+            className="dt-input pl-10 text-sm"
           />
         </form>
 
@@ -94,7 +94,7 @@ export default function AuditLogsPage() {
             setActionFilter(e.target.value);
             setPage(1);
           }}
-          className="w-full md:w-56 py-2 px-3 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-cyan-500"
+          className="dt-input w-full md:w-60 text-sm"
         >
           <option value="">All Actions</option>
           <option value="LOGIN_SUCCESS">LOGIN_SUCCESS</option>
@@ -111,7 +111,7 @@ export default function AuditLogsPage() {
       </div>
 
       {/* Audit Log Table */}
-      <div className="cyber-panel rounded-xl border border-slate-800 overflow-hidden">
+      <div className="dt-card overflow-hidden">
         {isLoading ? (
           <div className="py-20 flex justify-center">
             <LoadingSpinner size="lg" />
