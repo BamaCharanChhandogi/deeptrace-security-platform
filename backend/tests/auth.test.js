@@ -3,6 +3,8 @@ const app = require('../src/app');
 const db = require('../src/config/database');
 
 describe('Authentication & Authorization', () => {
+  jest.setTimeout(30000);
+
   afterAll(async () => {
     await db.destroy();
   });

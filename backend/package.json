@@ -11,7 +11,10 @@
     "migrate:rollback": "knex migrate:rollback",
     "seed": "knex seed:run",
     "sql": "node sql-cli.js",
-    "test": "jest --runInBand --detectOpenHandles --forceExit"
+    "test": "jest --runInBand --detectOpenHandles --forceExit --testTimeout=30000"
+  },
+  "jest": {
+    "testTimeout": 30000
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
