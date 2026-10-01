@@ -47,17 +47,19 @@ jobs:
         env:
           NODE_ENV: test
           DATABASE_URL: postgresql://postgres:postgrespassword@localhost:5432/deeptrace_test
+          TEST_DATABASE_URL: postgresql://postgres:postgrespassword@localhost:5432/deeptrace_test
           JWT_SECRET: test_jwt_secret_key_minimum_32_characters_long
           JWT_REFRESH_SECRET: test_jwt_refresh_secret_key_minimum_32_characters_long
         run: |
           cd backend
-          npm run migrate:latest
-          npm run seed:run
+          npx knex migrate:latest --env test
+          npx knex seed:run --env test
 
       - name: Run Backend Test Suite (15/15 Integration & Security Tests)
         env:
           NODE_ENV: test
           DATABASE_URL: postgresql://postgres:postgrespassword@localhost:5432/deeptrace_test
+          TEST_DATABASE_URL: postgresql://postgres:postgrespassword@localhost:5432/deeptrace_test
           JWT_SECRET: test_jwt_secret_key_minimum_32_characters_long
           JWT_REFRESH_SECRET: test_jwt_refresh_secret_key_minimum_32_characters_long
         run: |

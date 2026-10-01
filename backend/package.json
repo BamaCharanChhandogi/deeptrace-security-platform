@@ -8,8 +8,10 @@
     "dev": "nodemon src/server.js",
     "build": "knex migrate:latest && knex seed:run",
     "migrate": "knex migrate:latest",
+    "migrate:latest": "knex migrate:latest",
     "migrate:rollback": "knex migrate:rollback",
     "seed": "knex seed:run",
+    "seed:run": "knex seed:run",
     "sql": "node sql-cli.js",
     "test": "jest --runInBand --detectOpenHandles --forceExit --testTimeout=30000"
   },
